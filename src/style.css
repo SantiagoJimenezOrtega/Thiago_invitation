@@ -191,8 +191,8 @@ main.visible {
   margin-top: 2rem;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 1s ease 5s, transform 1s ease 5s;
-  /* Delays appearance */
+  /* Delays appearance - wait for THIAGO (4s) + SUBTITLE (1s) */
+  transition: opacity 1s ease 6s, transform 1s ease 6s;
 }
 
 .hero.animate .hero-image-container {
