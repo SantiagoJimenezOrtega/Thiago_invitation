@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Animation Sequence for lights
-  const message = "RUN";
+  const message = "THIAGO";
   let letterIndex = 0;
   let lightInterval;
 
