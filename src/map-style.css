@@ -1,0 +1,18 @@
+.map-link {
+    display: inline-block;
+    margin-top: 15px;
+    color: var(--stranger-red);
+    font-family: var(--font-title);
+    text-decoration: none;
+    border: 1px solid var(--stranger-red);
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.map-link:hover {
+    background: var(--stranger-red);
+    color: #000;
+    box-shadow: 0 0 15px var(--stranger-red);
+}
