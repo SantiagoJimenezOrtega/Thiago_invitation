@@ -2,6 +2,7 @@ import './style.css'
 import './mobile-nav.css'
 import './volume.css'
 import './map-style.css'
+import './video-style.css'
 
 document.addEventListener('DOMContentLoaded', () => {
   const overlay = document.getElementById('overlay');

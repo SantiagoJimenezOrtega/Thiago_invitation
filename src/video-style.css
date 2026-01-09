@@ -1,0 +1,60 @@
+/* Retro TV Video Style */
+.tv-video {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+}
+
+.tv-frame {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    background: #111;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow:
+        inset 0 0 20px #000,
+        0 0 15px rgba(20, 20, 20, 0.8),
+        0 0 50px rgba(231, 29, 54, 0.2);
+    /* Red glow */
+    border: 4px solid #333;
+}
+
+.tv-content {
+    width: 100%;
+    border-radius: 10px;
+    display: block;
+    filter: contrast(1.1) sepia(0.2);
+}
+
+/* Scanlines overlay effect */
+.scanlines {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0) 50%,
+            rgba(0, 0, 0, 0.1) 50%,
+            rgba(0, 0, 0, 0.1));
+    background-size: 100% 4px;
+    pointer-events: none;
+    /* Let clicks pass through to video controls */
+    border-radius: 10px;
+    z-index: 5;
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+    animation: scanline 10s linear infinite;
+}
+
+@keyframes scanline {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 100%;
+    }
+}
