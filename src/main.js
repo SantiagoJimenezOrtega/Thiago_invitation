@@ -1,5 +1,6 @@
 import './style.css'
 import './mobile-nav.css'
+import './volume.css'
 
 document.addEventListener('DOMContentLoaded', () => {
   const overlay = document.getElementById('overlay');
@@ -9,42 +10,72 @@ document.addEventListener('DOMContentLoaded', () => {
   const wall = document.getElementById('wall');
   const wallSection = document.querySelector('.lights-wall');
 
+  // Volume Controls
+  const muteBtn = document.getElementById('mute-btn');
+  const volSlider = document.getElementById('vol-slider');
+  let audio; // Global audio instance
+
+  function initAudio() {
+    audio = new Audio('/music.mp3');
+    audio.loop = true;
+    audio.volume = 0.5;
+
+    // Connect controls
+    if (volSlider) {
+      volSlider.addEventListener('input', (e) => {
+        audio.volume = e.target.value;
+        updateMuteIcon();
+      });
+    }
+
+    if (muteBtn) {
+      muteBtn.addEventListener('click', () => {
+        if (audio.muted) {
+          audio.muted = false;
+          if (audio.paused) audio.play();
+        } else {
+          audio.muted = true;
+        }
+        updateMuteIcon();
+      });
+    }
+  }
+
+  function updateMuteIcon() {
+    if (!audio) return;
+    if (audio.muted || audio.volume === 0) {
+      muteBtn.innerText = '🔇';
+    } else {
+      muteBtn.innerText = '🔊';
+    }
+  }
+
+  // Attempt to play as soon as possible
+  initAudio();
+
+  // Try Autoplay immediately
+  const playPromise = audio.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(error => {
+      console.log("Autoplay prevented. Waiting for user interaction.");
+    });
+  }
+
   // --- Intro Sequence ---
   overlay.addEventListener('click', () => {
+    // Ensure audio is playing on click (Fallback for Autoplay policy)
+    if (audio && audio.paused) {
+      audio.play();
+    }
+
     overlay.style.opacity = '0';
     setTimeout(() => {
       overlay.style.display = 'none';
       main.classList.add('visible');
       // Trigger Hero Animation
       hero.classList.add('animate');
-
-      // Start ambient sound if we had it
-      startAudio();
     }, 1000);
   });
-
-  function startAudio() {
-    const audio = new Audio('/music.mp3');
-    audio.loop = true;
-    audio.volume = 0.5; // Start volume
-
-    // Play attempt
-    audio.play().catch(e => {
-      console.log("Audio play failed (user didn't interact yet?):", e);
-    });
-
-    // Fade in effect
-    audio.volume = 0;
-    let vol = 0;
-    const fade = setInterval(() => {
-      if (vol < 0.6) {
-        vol += 0.05;
-        audio.volume = vol;
-      } else {
-        clearInterval(fade);
-      }
-    }, 200);
-  }
 
   // --- Particle/Spores Effect ---
   const canvas = document.getElementById('spores');
