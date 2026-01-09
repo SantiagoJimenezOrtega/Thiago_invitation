@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function initAudio() {
     audio = new Audio('/music.mp3');
     audio.loop = true;
-    audio.volume = 0.5;
+    audio.volume = 0.2;
 
     // Connect controls
     if (volSlider) {
