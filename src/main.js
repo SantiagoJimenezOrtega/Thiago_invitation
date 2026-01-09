@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- RSVP Button ---
   document.getElementById('rsvp-btn').addEventListener('click', () => {
-    const phoneNumber = "573175710585";
+    const phoneNumber = "573017869900";
     const text = "¡Hola! Quiero confirmar mi asistencia al cumpleaños de Thiago 🚲";
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank');
