@@ -24,39 +24,26 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function startAudio() {
-    // Simple Web Audio API Drone
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return;
+    const audio = new Audio('/music.mp3');
+    audio.loop = true;
+    audio.volume = 0.5; // Start volume
 
-    const ctx = new AudioContext();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
+    // Play attempt
+    audio.play().catch(e => {
+      console.log("Audio play failed (user didn't interact yet?):", e);
+    });
 
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(50, ctx.currentTime); // Low drone
-
-    // Lowpass filter for "muffled" sound
-    const filter = ctx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(200, ctx.currentTime);
-
-    osc.connect(filter);
-    filter.connect(gain);
-    gain.connect(ctx.destination);
-
-    gain.gain.setValueAtTime(0, ctx.currentTime);
-    gain.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 2); // Fade in low volume
-
-    osc.start();
-
-    // Add LFO for wobbling
-    const lfo = ctx.createOscillator();
-    lfo.frequency.value = 0.5;
-    const lfoGain = ctx.createGain();
-    lfoGain.gain.value = 50;
-    lfo.connect(lfoGain);
-    lfoGain.connect(filter.frequency);
-    lfo.start();
+    // Fade in effect
+    audio.volume = 0;
+    let vol = 0;
+    const fade = setInterval(() => {
+      if (vol < 0.6) {
+        vol += 0.05;
+        audio.volume = vol;
+      } else {
+        clearInterval(fade);
+      }
+    }, 200);
   }
 
   // --- Particle/Spores Effect ---
